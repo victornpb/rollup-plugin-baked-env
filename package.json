@@ -1,25 +1,25 @@
 {
-  "name": "foo-bar",
-  "nameFull": "FooBar",
+  "name": "rollup-plugin-baked-env",
+  "nameFull": "rollup-plugin-baked-env",
   "version": "0.0.0",
-  "description": "A foo-bar library",
+  "description": "A rollup-plugin-baked-env library",
   "license": "MIT",
   "engines": {
     "node": ">=6"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/username/foo-bar.git"
+    "url": "git+https://github.com/victornpb/rollup-plugin-baked-env.git"
   },
   "bugs": {
-    "url": "https://github.com/username/foo-bar/issues"
+    "url": "https://github.com/victornpb/rollup-plugin-baked-env/issues"
   },
-  "homepage": "https://github.com/username/foo-bar",
-  "author": "username",
-  "main": "dist/foo-bar.cjs.js",
-  "module": "dist/foo-bar.esm.js",
-  "unpkg": "dist/foo-bar.js",
-  "globalVar": "FooBar",
+  "homepage": "https://github.com/victornpb/rollup-plugin-baked-env",
+  "author": "victornpb",
+  "main": "dist/rollup-plugin-baked-env.cjs.js",
+  "module": "dist/rollup-plugin-baked-env.esm.js",
+  "unpkg": "dist/rollup-plugin-baked-env.js",
+  "globalVar": "RollupPluginBakedEnv",
   "scripts": {
     "start": "npm run watch",
     "build": "rollup -c",
