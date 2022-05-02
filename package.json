@@ -1,7 +1,7 @@
 {
   "name": "rollup-plugin-baked-env",
   "nameFull": "rollup-plugin-baked-env",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A rollup-plugin-baked-env library",
   "license": "MIT",
   "engines": {
