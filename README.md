@@ -19,32 +19,51 @@ Headline description
 
 ### [NPM](https://npmjs.com/package/rollup-plugin-baked-env)
 
-    npm install rollup-plugin-baked-env
+    npm install --save-dev rollup-plugin-baked-env
 ### [Yarn](https://github.com/yarnpkg/yarn)
 
     yarn add rollup-plugin-baked-env
 
-### CDN
-
-    <script type="text/javascript" src="https://unpkg.com/rollup-plugin-baked-env/"></script>
-
-## Packages
-
-<!-- Output table (auto generated do not modify) -->
-
-| File                                 | Module Type | Transpiled | Source Maps |
-|--------------------------------------|-------------|------------|-------------|
-| dist/rollup-plugin-baked-env.esm.mjs | esm         | No         | No          |
-| dist/rollup-plugin-baked-env.cjs.js  | cjs         | Yes        | Yes         |
-| dist/rollup-plugin-baked-env.esm.js  | esm         | Yes        | Yes         |
-| dist/rollup-plugin-baked-env.js      | umd         | Yes        | Yes         |
-
-<!-- END -->
-
-
 ## Usage
 
-Examples here
+### rollup.config.js
+```js
+import bakedEnv from 'rollup-plugin-baked-env';
+
+export default {
+    // ...
+    plugins: [
+        bakedEnv(),
+    ],
+};
+```
+
+### Inside your code
+```js
+import { production } from 'process.env';
+
+if (production === 'production') {
+    // code
+}
+```
+or
+```js
+import * as env from 'process.env';
+
+if (env.production === 'production') {
+    // code
+}
+```
+
+or
+```js
+import { production as alias } from 'process.env';
+
+if  (alias === 'production') {
+    // code
+}
+```
+
 
 ## License
 
