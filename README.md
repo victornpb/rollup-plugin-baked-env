@@ -92,6 +92,13 @@ console.log(env); // BAD!
 Object.keys(env).filter(/* ... */) // BAD! (if you access the env at runtime, it will force rollup to embed everything)
 ```
 
+## Validation by default
+Your code will fail to compile if the code imports variables that are not set!
+
+<img width="486" alt="image" src="https://user-images.githubusercontent.com/3372598/166487903-fa766449-852b-456c-9509-3b8b3642ec20.png">
+<img width="814" alt="image" src="https://user-images.githubusercontent.com/3372598/166487655-a4b15ea2-e53c-4a23-bb9c-ca0de2334b5c.png">
+
+
 ## Options
 
 
