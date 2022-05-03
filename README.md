@@ -13,7 +13,7 @@
 [![](https://img.shields.io/tokei/lines/github/victornpb/rollup-plugin-baked-env?style=flat-square)](https://www.npmjs.com/package/rollup-plugin-baked-env)
 <!-- endbadge -->
 
-Headline description
+This plugin allow you to use environment variables inside your code by importing process.env as a faux module. The environment variable will be baked in your code at compile time. Only the variables being used are included.
 
 ## Installation
 
@@ -22,11 +22,11 @@ Headline description
     npm install --save-dev rollup-plugin-baked-env
 ### [Yarn](https://github.com/yarnpkg/yarn)
 
-    yarn add rollup-plugin-baked-env
+    yarn add --dev rollup-plugin-baked-env
 
-## Usage
+## Adding to your project
 
-### rollup.config.js
+#### rollup.config.js
 ```js
 import bakedEnv from 'rollup-plugin-baked-env';
 
@@ -38,31 +38,63 @@ export default {
 };
 ```
 
-### Inside your code
-```js
-import { production } from 'process.env';
+## Usage Examples
+Inside your code you can do something like this:
 
-if (production === 'production') {
+#### Basic usage
+```js
+import { NODE_ENV } from 'process.env';
+
+if (NODE_ENV === 'production') {
     // code
 }
 ```
-or
+
+#### Import variable, aliasing it to another name
+```js
+import { ROLLUP_WATCH as isDev } from 'process.env';
+
+if (isDev) {
+    // code
+}
+else {
+    // code
+}
+```
+
+#### Import multiple variables
+```js
+import { NODE_ENV, FOO, BAR } from 'process.env';
+
+console.log(FOO, BAR);
+if (NODE_ENV === 'production') {
+    // code
+}
+```
+
+#### Import all variables
+```js
+import * as env from 'process.env'; // ✋ use with caution!
+
+if (env.production !== 'production') {
+    console.log('My home directory is ' + env.HOME);
+}
+```
+**NOTE:** If you do `import * as env from 'process.env'` never use the `env` variable directly!
+This will cause rollup to embed ALL environment variables inside your bundle.
+
 ```js
 import * as env from 'process.env';
 
-if (env.production === 'production') {
-    // code
-}
+// DON'T DO THIS!
+console.log(env); // BAD!
+
+Object.keys(env).filter(/* ... */) // BAD! (if you access the env at runtime, it will force rollup to embed everything)
 ```
 
-or
-```js
-import { production as alias } from 'process.env';
+## Options
 
-if  (alias === 'production') {
-    // code
-}
-```
+
 
 
 ## License
