@@ -47,7 +47,7 @@ const config = [
       },
     ],
     plugins: [
-      resolve(),
+      resolve({ preferBuiltins: true }),
       commonjs(),
       // babel({
       //   assumptions,
@@ -77,7 +77,7 @@ const config = [
       },
     ],
     plugins: [
-      resolve(),
+      resolve({ preferBuiltins: true }),
       babel({
         exclude: 'node_modules/**',
         presets: [
@@ -125,7 +125,7 @@ const config = [
       }
     ],
     plugins: [
-      resolve(),
+      resolve({ preferBuiltins: true }),
       babel({
         exclude: 'node_modules/**',
         presets: [
