@@ -29,7 +29,7 @@
     "test:watch": "jest -w",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
-    "version": "npm run build",
+    "version": "npm i --package-lock-only && npm run build && git add --all",
     "release": "np --any-branch"
   },
   "files": [
