@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { FOO } from 'process.env';
 import { BAR } from 'process.env';
 import * as env from 'process.env';

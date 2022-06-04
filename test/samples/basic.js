@@ -2,8 +2,8 @@
 import { FOO } from 'process.env';
 
 if (FOO === 'foo') {
-    console.log('Yep');
+  console.log('Yep');
 }
 else {
-    console.log('Nope');
+  console.log('Nope');
 }
