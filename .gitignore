@@ -165,10 +165,6 @@ dist
 # TODO: where does this rule come from?
 docs/_book
 
-# TODO: where does this rule come from?
-test/
-
-
 # VisualStudioCode
 # https://github.com/github/gitignore/blob/main/gitignore/Global/VisualStudioCode.gitignore
 #--------------------------------------------------------------------------------
@@ -315,7 +311,8 @@ GitHub.sublime-settings
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*

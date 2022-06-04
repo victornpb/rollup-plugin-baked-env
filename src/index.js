@@ -40,7 +40,7 @@ export default function envPlugin(variables = process.env, options = {}) {
         let code = dataToEsm(variables, {
           namedExports: true,
           objectShorthand: true, // irrelevant as we don't use the default export
-          // disableDefaultExport: true, // this option doesn't exist
+          // disableDefaultExport: true, // this option doesn't exist (TODO: make PR to propose @rollup/pluginutils)
 
           // code generation preferences
           preferConst: options.preferConst ?? true,
@@ -50,7 +50,7 @@ export default function envPlugin(variables = process.env, options = {}) {
 
         // remove default export from code so people can't import the whole process.env object
         // because it would embedd all the environment variables in the code,
-        // this could lead to unintentionally which could expose sensitive information
+        // this could lead to unintentionally exposing sensitive information
         // replace with a empty object
         // code = code.replace(/export default[\s\S]*$/, '');
 
