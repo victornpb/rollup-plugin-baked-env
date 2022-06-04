@@ -2,7 +2,7 @@
   "name": "rollup-plugin-baked-env",
   "nameFull": "rollup-plugin-baked-env",
   "version": "0.1.0",
-  "description": "A rollup-plugin-baked-env library",
+  "description": "Import process.env as a module for baking environment variables at build time.",
   "license": "MIT",
   "engines": {
     "node": ">=6"
