@@ -13,6 +13,8 @@
 [![](https://img.shields.io/tokei/lines/github/victornpb/rollup-plugin-baked-env?style=flat-square)](https://www.npmjs.com/package/rollup-plugin-baked-env)
 <!-- endbadge -->
 
+![](https://repository-images.githubusercontent.com/488007221/52dec7b4-4d30-420a-b958-238c8b78d4b8)
+
 This plugin allow you to use environment variables inside your code by importing process.env as a faux module. The environment variable will be baked in your code at compile time. Only the variables being used are included.
 
 ## Installation
