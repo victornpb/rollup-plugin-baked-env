@@ -25,7 +25,7 @@
     "build": "rollup -c",
     "watch": "rollup -c -w",
     "prebuild": "rimraf dist",
-    "test": "npm run lint && npm run build",
+    "test": "npm run lint && npm run build && jest",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
     "version": "npm run build",
@@ -39,7 +39,6 @@
     "bar"
   ],
   "sideEffects": false,
-  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.17.9",
     "@babel/plugin-proposal-class-properties": "^7.16.7",
@@ -49,9 +48,12 @@
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.16.11",
+    "@types/jest": "^28.1.0",
     "asciitable.js": "^1.0.3",
     "eslint": "^8.13.0",
+    "eslint-plugin-jest": "^26.4.6",
     "husky": "^7.0.4",
+    "jest": "^28.1.0",
     "lint-staged": "^12.4.0",
     "np": "^7.6.1",
     "postcss": "^8.4.12",
@@ -75,5 +77,8 @@
       "npm run lint:fix",
       "git add"
     ]
+  },
+  "peerDependencies": {
+    "@rollup/pluginutils": "^4.2.1"
   }
 }

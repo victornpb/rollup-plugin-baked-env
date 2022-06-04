@@ -1,8 +1,10 @@
 {
+  "plugins": ["jest"],
   "env": {
     "es6": true,
     "browser": true,
-    "node": true
+    "node": true,
+    "jest/globals": true
   },
   "extends": "eslint:recommended",
   "globals": {
@@ -28,6 +30,5 @@
     "no-unused-expressions": "error",
     "no-trailing-spaces": "error",
     "no-undef": "error"
-
   }
 }
