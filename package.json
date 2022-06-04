@@ -2,7 +2,7 @@
   "name": "rollup-plugin-baked-env",
   "nameFull": "rollup-plugin-baked-env",
   "version": "0.1.0",
-  "description": "Import process.env as a module for baking environment variables at build time.",
+  "description": "Import process.env as a module for baking environment variables inside your bundle at build time.",
   "license": "MIT",
   "engines": {
     "node": ">=6"
@@ -26,6 +26,7 @@
     "watch": "rollup -c -w",
     "prebuild": "rimraf dist",
     "test": "npm run lint && npm run build && jest",
+    "test:watch": "jest -w",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
     "version": "npm run build",
@@ -35,8 +36,15 @@
     "dist"
   ],
   "keywords": [
-    "foo",
-    "bar"
+    "rollup",
+    "rollup-plugin",
+    "environment variables",
+    "env",
+    "bake",
+    "baked",
+    "define",
+    "constants",
+    "process.env"
   ],
   "sideEffects": false,
   "devDependencies": {
