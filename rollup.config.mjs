@@ -1,10 +1,13 @@
-import babel from 'rollup-plugin-babel';
-import resolve from 'rollup-plugin-node-resolve';
-import commonjs from 'rollup-plugin-commonjs';
-import { terser } from 'rollup-plugin-terser';
+import babel from '@rollup/plugin-babel';
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
 import banner from 'rollup-plugin-banner2';
 import S from 'tiny-dedent';
-import packageJson from './package.json';
+import matrixToAsciiTable from 'asciitable.js';
+import * as fs from 'fs';
+
+const loadJSON = (path) => JSON.parse(fs.readFileSync(new URL(path, import.meta.url)));
+const packageJson = loadJSON('./package.json');
 
 const license = () => S(`
   /*!
@@ -35,30 +38,6 @@ const assumptions = {
 
 const config = [
 
-  // Modern Module (No babel preset)
-  {
-    input: entry,
-    output: [
-      {
-        file: packageJson.module.replace('.js', '.mjs'),
-        format: 'esm',
-        sourcemap: false,
-        exports: 'default',
-      },
-    ],
-    plugins: [
-      resolve({ preferBuiltins: true }),
-      commonjs(),
-      // babel({
-      //   assumptions,
-      //   plugins: [
-
-      //   ]
-      // }),
-      banner(license)
-    ]
-  },
-
   // CJS and ESM (preset-env)
   {
     input: entry,
@@ -68,12 +47,18 @@ const config = [
         format: 'cjs',
         sourcemap,
         exports: 'default',
+        globals: {
+          path: 'path'
+        }
       },
       {
         file: packageJson.module,
         format: 'esm',
         sourcemap,
         exports: 'default',
+        globals: {
+          path: 'path'
+        }
       },
     ],
     plugins: [
@@ -85,10 +70,7 @@ const config = [
             '@babel/env',
             {
               modules: 'auto',
-              targets: {
-                browsers: '> 1%, IE 11, not op_mini all, not dead',
-                node: 8
-              },
+              targets: 'maintained node versions',
               // useBuiltIns: 'usage',
               // corejs: 3,
             }
@@ -100,14 +82,6 @@ const config = [
         ]
       }),
       commonjs(),
-      // production &&
-      // terser({
-      //   output: {
-      //     // compress: false,
-      //     // mangle: false,
-
-      //   }
-      // }),
       banner(license)
     ]
   },
@@ -122,6 +96,9 @@ const config = [
         format: 'umd',
         sourcemap,
         exports: 'default',
+        globals: {
+          path: 'path'
+        }
       }
     ],
     plugins: [
@@ -133,10 +110,7 @@ const config = [
             '@babel/env',
             {
               modules: 'auto',
-              targets: {
-                browsers: '> 1%, IE 11, not op_mini all, not dead',
-                node: 8
-              },
+              targets: '> 1%, maintained node versions, IE 11, not op_mini all, not dead',
               // useBuiltIns: 'usage',
               // corejs: 3,
             }
@@ -148,9 +122,6 @@ const config = [
         ]
       }),
       commonjs(),
-      production && terser({
-        output: {}
-      }),
       banner(license)
     ]
   }
@@ -161,7 +132,6 @@ const config = [
 // generate a markdown table containing output options for the README
 function updateReadmeOutputTable() {
   function generateOutputDescription(rollupConfig) {
-    const matrixToAsciiTable = require('asciitable.js');
     const gihubTable = {
       row: {
         paddingLeft: '|',
@@ -197,7 +167,6 @@ function updateReadmeOutputTable() {
     const endIndex = str.indexOf(endString, startIndex + startString.length);
     return (startIndex !== -1 && endIndex !== -1) ? str.slice(0, startIndex + startString.length) + substitute + str.slice(endIndex) : str;
   }
-  const fs = require('fs');
   const readme = fs.readFileSync('README.md', 'utf8');
   const outputDescription = generateOutputDescription(config);
   const newReadme = replaceBetween(readme, '<!-- Output table (auto generated do not modify) -->', '<!-- END -->', `\n\n${outputDescription}\n\n`);
