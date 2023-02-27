@@ -7,7 +7,6 @@
   "engines": {
     "node": ">=12"
   },
-  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/victornpb/rollup-plugin-baked-env.git"
@@ -18,11 +17,9 @@
   "homepage": "https://github.com/victornpb/rollup-plugin-baked-env",
   "author": "victornpb",
   "main": "dist/rollup-plugin-baked-env.cjs.js",
-  "module": "dist/rollup-plugin-baked-env.esm.js",
-  "unpkg": "dist/rollup-plugin-baked-env.js",
-  "globalVar": "RollupPluginBakedEnv",
+  "module": "dist/rollup-plugin-baked-env.mjs",
   "exports": {
-    "import": "./dist/rollup-plugin-baked-env.esm.js",
+    "import": "./dist/rollup-plugin-baked-env.mjs",
     "require": "./dist/rollup-plugin-baked-env.cjs.js"
   },
   "scripts": {

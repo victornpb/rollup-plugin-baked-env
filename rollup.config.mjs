@@ -37,8 +37,6 @@ const assumptions = {
 };
 
 const config = [
-
-  // CJS and ESM (preset-env)
   {
     input: entry,
     output: [
@@ -70,7 +68,7 @@ const config = [
             '@babel/env',
             {
               modules: 'auto',
-              targets: 'maintained node versions',
+              targets: 'node >= 12, maintained node versions',
               // useBuiltIns: 'usage',
               // corejs: 3,
             }
@@ -85,47 +83,6 @@ const config = [
       banner(license)
     ]
   },
-
-  // Legacy UMD (preset-env)
-  {
-    input: entry,
-    output: [
-      {
-        name: packageJson.globalVar,
-        file: packageJson.unpkg,
-        format: 'umd',
-        sourcemap,
-        exports: 'default',
-        globals: {
-          path: 'path'
-        }
-      }
-    ],
-    plugins: [
-      resolve({ preferBuiltins: true }),
-      babel({
-        exclude: 'node_modules/**',
-        presets: [
-          [
-            '@babel/env',
-            {
-              modules: 'auto',
-              targets: '> 1%, maintained node versions, IE 11, not op_mini all, not dead',
-              // useBuiltIns: 'usage',
-              // corejs: 3,
-            }
-          ]
-        ],
-        assumptions,
-        plugins: [
-
-        ]
-      }),
-      commonjs(),
-      banner(license)
-    ]
-  }
-
 ];
 
 
