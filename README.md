@@ -13,20 +13,88 @@
 [![](https://img.shields.io/tokei/lines/github/victornpb/rollup-plugin-baked-env?style=flat-square)](https://www.npmjs.com/package/rollup-plugin-baked-env)
 <!-- endbadge -->
 
-![](https://repository-images.githubusercontent.com/488007221/52dec7b4-4d30-420a-b958-238c8b78d4b8)
+![](https://user-images.githubusercontent.com/3372598/221454014-917d328c-9d88-4fee-b451-42f505a8ca52.jpg)
 
-This plugin allow you to use environment variables inside your code by importing process.env as a faux module. The environment variable will be baked in your code at compile time. Only the variables being used are included.
+This plugin allow you to use environment variables inside your code by importing "process.env" as a module. The environment variable will be baked in your code at compile time. Only the variables being used are included in your bundled file.
 
-## Installation
+# Usage Examples
+Inside your code you can do something like this:
 
-### [NPM](https://npmjs.com/package/rollup-plugin-baked-env)
+## Basic usage
+```js
+import { FOO_BAR } from 'process.env';
 
-    npm install --save-dev rollup-plugin-baked-env
-### [Yarn](https://github.com/yarnpkg/yarn)
+// use the variable
+if (FOO_BAR === 'foo') {
+    // do stuff
+}
+```
+
+## Import variable, aliasing it to another name
+```js
+import { FOO_BAR as myFooBar } from 'process.env';
+
+if (myFooBar) {
+    // code
+}
+else {
+    // code
+}
+```
+
+## Import multiple variables
+```js
+import { NODE_ENV, FOO, BAR } from 'process.env';
+
+console.log(FOO, BAR);
+if (NODE_ENV === 'production') {
+    // code
+}
+```
+
+## Readability and consistency
+If you used to plugins like EnvironmentPlugin or DefinePlugin they use find/replace to replace the constants in your source codoe, but reading the code it's unclear where a variable is coming from, also ESLint and prettier thinks those variables are globals, since there's no reference about then anywhere. This fixes the, whithout having to make a whitelist.
+
+## Validation by default
+Your code will fail to compile if the code imports variables that are not set!
+
+<img width="486" alt="image" src="https://user-images.githubusercontent.com/3372598/166487903-fa766449-852b-456c-9509-3b8b3642ec20.png">
+<img width="814" alt="image" src="https://user-images.githubusercontent.com/3372598/166487655-a4b15ea2-e53c-4a23-bb9c-ca0de2334b5c.png">
+
+
+## Caveats importing all variables
+
+If you do `import * as env from 'process.env'` never use the `env` variable directly!
+This will cause rollup to embed ALL environment variables inside your bundle.
+
+Works fine, but not recommended:
+```js
+import * as env from 'process.env'; // ✋ AVOID!
+
+if (env.production !== 'production') {
+    console.log('My home directory is ' + env.HOME);
+}
+```
+Because if you do this, bad things happen:
+```js
+import * as env from 'process.env'; // ✋ BAD!
+
+console.log(env); // 🚫 BAD! (DON'T DO THIS!)
+
+Object.keys(env).filter(/* ... */) // 🚫 BAD! (if you access the env at runtime, it will force rollup to embed everything)
+```
+
+
+# Installation
+
+## [NPM](https://npmjs.com/package/rollup-plugin-baked-env)
+
+    npm install --D rollup-plugin-baked-env
+## [Yarn](https://github.com/yarnpkg/yarn)
 
     yarn add --dev rollup-plugin-baked-env
 
-## Adding to your project
+# Adding to your project
 
 #### rollup.config.js
 ```js
@@ -40,71 +108,40 @@ export default {
 };
 ```
 
-## Usage Examples
-Inside your code you can do something like this:
-
-#### Basic usage
-```js
-import { NODE_ENV } from 'process.env';
-
-if (NODE_ENV === 'production') {
-    // code
-}
-```
-
-#### Import variable, aliasing it to another name
-```js
-import { ROLLUP_WATCH as isDev } from 'process.env';
-
-if (isDev) {
-    // code
-}
-else {
-    // code
-}
-```
-
-#### Import multiple variables
-```js
-import { NODE_ENV, FOO, BAR } from 'process.env';
-
-console.log(FOO, BAR);
-if (NODE_ENV === 'production') {
-    // code
-}
-```
-
-#### Import all variables
-```js
-import * as env from 'process.env'; // ✋ use with caution!
-
-if (env.production !== 'production') {
-    console.log('My home directory is ' + env.HOME);
-}
-```
-**NOTE:** If you do `import * as env from 'process.env'` never use the `env` variable directly!
-This will cause rollup to embed ALL environment variables inside your bundle.
-
-```js
-import * as env from 'process.env';
-
-// DON'T DO THIS!
-console.log(env); // BAD!
-
-Object.keys(env).filter(/* ... */) // BAD! (if you access the env at runtime, it will force rollup to embed everything)
-```
-
-## Validation by default
-Your code will fail to compile if the code imports variables that are not set!
-
-<img width="486" alt="image" src="https://user-images.githubusercontent.com/3372598/166487903-fa766449-852b-456c-9509-3b8b3642ec20.png">
-<img width="814" alt="image" src="https://user-images.githubusercontent.com/3372598/166487655-a4b15ea2-e53c-4a23-bb9c-ca0de2334b5c.png">
-
-
 ## Options
 
+bakedEnv(variables, options)
+
+| Parameters            | Description                                                                       | Type    | Default Value   |
+|-----------------------|-----------------------------------------------------------------------------------|---------|-----------------|
+| `variables`           | The variables to be exposed.                                                      | object  | `process.env`   |
+| `options.moduleName`  | The name of the faux module. You can choose another name like 'environment_vars'` | string  | `'process.env'` |
+| `options.preferConst` | Embed variables in the code as const instead of var.                              | boolean | `true`          |
+| `options.compact`     | Generate code without line breaks.                                                | boolean | `false`         |
+| `options.indent`      | The indentation to use in the generated code.                                     | string  | `'\t'`          |
 
 
+### Options example
+```js
+import bakedEnv from 'rollup-plugin-baked-env';
+
+const myVariables = {
+  MY_VAR_1: 'value1',
+  MY_VAR_2: 'value2',
+};
+
+export default {
+  // ...
+  plugins: [
+    bakedEnv(myVariables, {
+      moduleName: 'enviroment_vars', // expose variables as a module called 'enviroment_vars' example: `import { FOO } from 'enviroment_vars';`
+      preferConst: true,
+      compact: false,
+      indent: '  ',
+    }),
+  ],
+};
+```
 
 ## License
 
